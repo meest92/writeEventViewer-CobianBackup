@@ -1,22 +1,21 @@
-# writeEventViewer-CobianBackup
-Script básico para escribir en el visor de eventos de Windows.
+# addMailBox
+Script para añadir un nuevo buzón en nuestro servidor de Exchange.
 
 Este script nos permitirá:
-* Comprobar estado de la copia de seguridad de Cobian Backup.
-* Crear un nuevo Log en el Registro de eventos de Windows.
-* Marcar un 0 o un 1 la salida del script dependiendo del estado del backup (0 - Correcto | 1 - Incorrecto).
-* Dejar constancia en el visor de eventos del estado de la tarea de backup.
+* Añadir un nuevo buzón de correo dentro de nuestro servidor Exchange.
+* Añadir buzones de manera masiva, usando CSV, a nuestro servidor Exchange. (En construcción).
 
 ¿Cómo funciona?
 ======
-Este script realiza la comprobación de los logs de Cobian Backup 11, guardados en la ruta por defecto que establece el programa. Luego comprueba si existe en el visor de eventos el contenedor Backup Cobian. Si no existe lo crea, si existe entoces escribe si la finalizacion del backup ha sido exitosa o incorrecta, mediante los estados 0 para tarea correcta y 1 para tarea incorrecta.
+Este script tiene un menú donde nos va a pedir que opción queremos hacer (1-Para crear un buzón de manera individual, 2-Crear buzones de manera masiva). La opción 2 aun está en fase de desarrollo, por lo tanto, no está activa.
+La opción 1, nos va a pedir los datos del buzón; nombre, apellido, dirección de correo y finalmente el Tenant(OU) donde tenemos alojado este cliente. El propio script realiza las comprobaciones para saber que todo lo que hemos indicado es correcto, si el usuario no existe dentro del Tenant nos creará el buzón de correo usando una contraseña randomizada de 16 caracteres.
+Una vez terminado el proceso, por pantalla nos indicará el resumen de la operación y nos indicará la contraseña que se ha creado para este buzón.
 
 Posibles utilidades
 ======
-* Personalmente, lo uso para que una app pueda leer el visor de eventos y pueda establecer mediante avisos si el backup es correcto o incorrecto
+* Creación de forma automatizada de buzones de correo Exchange en un servidor propio.
 
-Implementación en Cobian Backup
+Uso
 ======
-Es importante que Cobian ejecute el script después de terminar la tarea. Dentro de todas las tareas de Cobian hay un apartado para poder ejecutar scripts personalizados.
-Cobian NO puede ejecutar por si solo scripts *.ps1, solamente ejecuta .bat o .cmd. Seguidamente adjunto un ejemplo de .bat de llamada al script escrito en PowerShell:
-*** powershell -ExecutionPolicy ByPass -File "Ruta_del_script_ps1" ***
+Editar la variable PATH dentro del script para indicarle los datos, por ejemplo dominio, OU, etc.
+Una vez cambiado el PATH ejecutar el script y seguir los pasos que indica por pantalla.
