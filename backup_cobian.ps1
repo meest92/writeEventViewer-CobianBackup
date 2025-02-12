@@ -3,7 +3,7 @@
 # dependiendo del catalogo de errores que se establece en el apartado "ErrorPatterns".                                             #
 # Autor: Marc Esteve                                                                                                               #
 # Organización: Accon Software SL                                                                                                  #
-# Versión: v2.4                                                                                                                    #
+# Versión: v2.4.1                                                                                                                    #
 # Fecha: 11/02/2025                                                                                                                #
 ####################################################################################################################################
 
@@ -86,29 +86,27 @@ function Analyze-Log {
         "The filename, directory name, or volume label syntax is incorrect" = 1009
         "Un error ha ocurrido mientras se comprobaba la existencia de nuevas versiones: Connect timed out." = 1010
         "El sistema no puede encontrar la ruta especificada" = 1011
-        "backup completado con éxito"= 0
-        "El respaldo ha terminado sin errores" = 0
-        "La operación ha sido completada sin errores" = 0 
     }
 
-    $errorFound = $false
+    $EventID = 9999  # Valor por defecto si no se encuentra coincidencia exacta
 
     # Buscar patrones de error en el log completo
     foreach ($pattern in $errorPatterns.Keys) {
-        if ($logContent -match $pattern) {
-            $errorFound = $true
-            if ($errorPatterns[$pattern] -eq 0){
-                Register-Event -message "Backup Completado Correctamente" -eventId $errorPatterns[$pattern]
-            }else{
-                Register-Event -message "Error encontrado: $pattern" -eventId $errorPatterns[$pattern]
+        if ($logContent -match [regex]::Escape($pattern)) {
+            $EventID = $ErrorPatterns[$Pattern]
+            Register-Event -message "Error encontrado: $pattern" -eventId $EventID
             return
-            }
         }
     }
 
-    # Si no se encontró ningún error catalogado, registrar evento genérico
-    if (-not $errorFound) {
-        Register-Event -message "Error no catalogado en el log de Cobian." -eventId 9999
+    # Si no se detectó ningún error conocido, verificar si aparece "ERR"
+    if ($EventID -eq 9999) {
+        if ($logContent -cmatch "\bERR\b"){
+        Register-Event -message "Error no catalogado" -eventId $EventID
+        }else{
+            $EventID = 0 # Backup completado correctamente
+            Register-Event -message "Backup Completado Correctamente" -eventId $EventID
+        }
     }
 }
 
