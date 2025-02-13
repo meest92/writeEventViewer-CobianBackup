@@ -86,6 +86,7 @@ function Analyze-Log {
         "The filename, directory name, or volume label syntax is incorrect" = 1009
         "Un error ha ocurrido mientras se comprobaba la existencia de nuevas versiones: Connect timed out." = 1010
         "El sistema no puede encontrar la ruta especificada" = 1011
+        "The system cannot find the path specified" = 1011
     }
 
     $EventID = 9999  # Valor por defecto si no se encuentra coincidencia exacta
