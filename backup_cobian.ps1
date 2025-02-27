@@ -81,6 +81,7 @@ function Analyze-Log {
         "El solicitador de imágenes instantáneas de volumen (VSC) no está disponible" = 1005
         "El nombre de archivo, el nombre de directorio o la sintaxis de la etiqueta del volumen no son correctos" = 1006
         "Uno o más errores han ocurrido mientras se creaba una imagen instantánea de volumen (VSC)."= 1007
+        "One or more errors occurred while creating the Volume Shadow Copy image" = 1007
         "Access is denied" = 1008
         "Acceso Denegado" = 1008
         "The filename, directory name, or volume label syntax is incorrect" = 1009
@@ -89,6 +90,8 @@ function Analyze-Log {
         "The system cannot find the path specified" = 1011
         "El sistema no puede encontrar el archivo especificado" = 1012
         "The user name or password is incorrect" = 1013
+        "El nombre de usuario o la contraseña no son correctos" = 1013
+        "The specified network name is no longer available" = 1014
     }
 
     $EventID = 9999  # Valor por defecto si no se encuentra coincidencia exacta
